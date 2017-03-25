@@ -29,6 +29,15 @@ Route::get('/', 'HomeController@index');
 
 })->name('project.email');
 */
+Route::group(['middleware'=>'admin'],function(){
+
+    Route::resource('/admin/projects','AdminProjectsController');
+    Route::resource('/admin/users','AdminUsersController');
+    Route::resource('/admin/conections','AdminConectsController');
+
+});
+
+
 Route::group(['middleware'=>'user'],function(){
 
     Route::resource('/conection','ConectionController');

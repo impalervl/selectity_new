@@ -38,10 +38,16 @@
                     <li {{(Request::is('conection/create') ? 'class=active' : '') }}><a  href={{route('conection.create')}}>Расчёт присоединения</a></li>
                     <li {{(Request::is('project') ? 'class=active' : '') }}><a href={{route('project.index')}}>Расчёт проекта</a></li>
                     <li {{(Request::is('conection') ? 'class=active' : '') }}><a href={{route('conection.index')}}>Результаты</a></li>
-                    @else
                     @endif
+
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    @if (Auth::user())
+                        @if (Auth::user()->role_id==1)
+                    <li><a href="{{ route('users.index') }}">Amin menu</a></li>
+                        @endif
+                    @endif
+
                     <!-- Authentication Links -->
                     @if (Auth::guest())
                         <li><a href="{{ route('login') }}">Login</a></li>

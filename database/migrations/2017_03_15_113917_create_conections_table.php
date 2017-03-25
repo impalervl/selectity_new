@@ -15,7 +15,7 @@ class CreateConectionsTable extends Migration
     {
         Schema::create('conections', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('project_id');
+            $table->integer('project_id')->unsigned();
             $table->string('name');
             $table->string('title');
             $table->string('product');
@@ -24,6 +24,8 @@ class CreateConectionsTable extends Migration
             $table->string('break_current');
             $table->string('outdoor_protection');
             $table->timestamps();
+
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
         });
     }
 

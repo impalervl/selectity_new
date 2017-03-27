@@ -71,7 +71,9 @@ class ConectionController extends Controller
         $user = Auth::user();
         $email = $user->email;
 
-        return Mail::to($email)->send(new Results1);
+        Mail::to($email)->send(new Results1);
+
+        return redirect('/conection');
     }
     
     

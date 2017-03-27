@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Conection;
 use App\Http\Requests\ConectionRequest;
 use App\Mail\Results;
+use App\Mail\Results1;
 use App\Project;
 use App\User;
 use App\Role;
@@ -62,7 +63,7 @@ class ConectionController extends Controller
 
         $pdf = PDF::loadView('email.pdf', compact('conections'))->setPaper('a4', 'landscape');
 
-        return $pdf->download('invoice.pdf');
+        return $pdf->download('results.pdf');
     }
 
     static public function mail()
@@ -70,7 +71,7 @@ class ConectionController extends Controller
         $user = Auth::user();
         $email = $user->email;
 
-        return Mail::to($email)->send(new Results);
+        return Mail::to($email)->send(new Results1);
     }
     
     

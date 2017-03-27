@@ -3,6 +3,8 @@
 <div class="container-fluid">
     <h1>Результаты</h1>
     @if(isset($conections))
+        <a class="btn btn-warning" href={{route('conection.getpdf')}} role="button">Загрузить в Pdf</a>
+        <a class="btn btn-warning" href={{route('conection.mail')}} role="button">Отпаравить на почту</a>
     <table id ="results_list" class="table table-condensed">
         <thead>
         <tr>
@@ -60,8 +62,7 @@
 
         </tbody>
     </table>
-        <a class="btn btn-warning" href={{route('conection.getpdf')}} role="button">Сохранить результаты</a>
-        <a class="btn btn-warning" href={{route('conection.mail')}} role="button">Отпаравить на почту</a>
+
     @else
         <div class="container-fluid">
             <h3>Пока ничего не посчитано</h3>

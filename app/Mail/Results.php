@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Http\Controllers\ConectionController;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -28,6 +29,12 @@ class Results extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.results');
+        $conections = new ConectionController;
+
+        $conections = $conections->index();
+
+        $conections = $conections->conections;
+
+        return $this->view('email.pdf', compact('conections'));
     }
 }

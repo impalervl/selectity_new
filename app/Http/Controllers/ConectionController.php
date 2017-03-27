@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Conection;
 use App\Http\Requests\ConectionRequest;
+use App\Mail\Results;
 use App\Project;
 use App\User;
 use App\Role;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Validator;
 
 class ConectionController extends Controller
@@ -22,7 +25,7 @@ class ConectionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    static public function index()
+    public function index()
     {
 
         $cnt = 0;
@@ -48,6 +51,29 @@ class ConectionController extends Controller
 
         return view('results.index', compact('conections', 'project_names'));
     }
+    
+    static public function pdf()
+    {
+        $conections = new ConectionController;
+
+        $conections = $conections->index();
+
+        $conections = $conections->conections;
+
+        $pdf = PDF::loadView('email.pdf', compact('conections'))->setPaper('a4', 'landscape');
+
+        return $pdf->download('invoice.pdf');
+    }
+
+    static public function mail()
+    {
+        $user = Auth::user();
+        $email = $user->email;
+
+        return Mail::to($email)->send(new Results);
+    }
+    
+    
 
     /**
      * Show the form for creating a new resource.

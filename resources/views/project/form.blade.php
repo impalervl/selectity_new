@@ -1,11 +1,11 @@
 @extends('layouts.app1')
 
 @section('content')
-<div class="container-fluid">
+<div class="container-fluid" >
 
-    <h1>Форма расчёта для присоединения{{$title}}</h1>
+    <h1>Форма расчёта для присоединения<span id = "title"> </span></h1>
 
-    {!! Form::open(['method'=>'POST','action'=>'ProjectController@calculate']) !!}
+    {!! Form::open(['id'=>'project-form']) !!}
 
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -33,44 +33,25 @@
         {!! Form::label('capacity','Номинальная мощность(Вт)') !!}
         {!! Form::text('capacity', null, ['class' =>'form-control']) !!}
     </div>
-    <input type="hidden" name="sec" value="{{$sections--}}">
-    <input type="hidden" name="sections" value="{{$sections}}">
-    <input type="hidden" name="section3" value="{{$section3}}">
-    <input type="hidden" name="section2" value="{{$section2}}">
-    <input type="hidden" name="section1" value="{{$section1}}">
-    <input type="hidden" name="title" value="{{$title}}">
 
-    @if(isset($cnt1))
-        <input type="hidden" name="dfdf" value="{{$cnt1++}}">
-        <input type="hidden" name="cnt1" value="{{$cnt1}}">
-        @if($cnt1== $section1)
-            <input type="hidden" name="sec1" value="{{$parent--}}">
-        @endif
-
+    @if(isset($section_array))
+        <input type="hidden" name= "section_cnt" value="{{$i=1}}">
+        <input type="hidden" name= "conections" value="">
+        <div id = 'hidden'>
+            @foreach($section_array as $section)
+                <input type="hidden" id = "section{{$i++}}" value="{{$section}}">
+            @endforeach
+        </div>
     @endif
-    @if(isset($cnt2))
-        <input type="hidden" name="sec" value="{{$cnt2++}}">
-        <input type="hidden" name="cnt2" value="{{$cnt2}}">
-        @if($cnt2== $section2)
-            <input type="hidden" name="sec1" value="{{$parent--}}">
-        @endif
 
-    @endif
-    @if(isset($cnt3))
-        <input type="hidden" name="sec" value="{{$cnt3++}}">
-        <input type="hidden" name="cnt3" value="{{$cnt3}}">
-        @if($cnt3== $section3)
-            <input type="hidden" name="sec1" value="{{$parent--}}">
-        @endif
+    <a class="btn btn-warning" id = 'submit-form-button' role="button">Расчёт проекта</a>
 
-    @endif
-    <input type="hidden" name="parent" value="{{$parent}}">
-
-    {!! Form::submit('Подтвердить', ['class' =>'btn btn-success']) !!}
 
     {!! Form::close() !!}
 
-    @include('includes.formerror')
+</div>
+<div  id ="errors">
+    <ul></ul>
 </div>
 
 @endsection

@@ -25,7 +25,7 @@ class ParentRequest extends FormRequest
     {
         return [
             'name'=>'required',
-            'parent'=>'required',
+            'parents'=>'required',
             
         ];
     }

@@ -268,7 +268,7 @@ class ConectionController extends Controller
             ->where([['nominal_current', '=', $nominal], ['poles', '=', $poles]])
             ->get();
 
-        if (isset($check['parent'])) {
+        if (isset($check['section_cnt'])) {
             $project = $user->project->last();
             $title = $request->title;
         }
@@ -326,7 +326,7 @@ class ConectionController extends Controller
             }
         }
 
-        if (isset($check['parent'])) {
+        if (isset($check['section_cnt'])) {
             return $creates;
         } else {
             return  view('conection.result', compact('creates'));

@@ -13,8 +13,8 @@
             </div>
 
             <div class="form-group">
-                {!! Form::label('parent','Количество шиносборок') !!}
-                {!! Form::select('parent',array(''=>'Количество шиносборок','1'=>'1','2'=>'2','3'=>'3'), null, ['class' =>'form-control']) !!}
+                {!! Form::label('parents','Количество шиносборок') !!}
+                {!! Form::select('parents',array(''=>'Количество шиносборок','1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5','6'=>'6'), null, ['class' =>'form-control']) !!}
             </div>
 
             {!! Form::submit('Подтвердить', ['class' =>'btn btn-success']) !!}

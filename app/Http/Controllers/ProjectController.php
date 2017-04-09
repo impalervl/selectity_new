@@ -86,7 +86,7 @@ class ProjectController extends Controller
             'electric_user'=>'required',
             'poles'=>'required',
             'voltage'=>'required',
-            'capacity'=>'required|integer'
+            'capacity'=>'required|integer|between:100,60000'
         ]);
 
         if ($validator->fails()) {
@@ -100,15 +100,24 @@ class ProjectController extends Controller
         }
 
         $temp = $request->all();
-        $temp['conections'] = $temp['conections'] - 1;
+
 
         $results = ConectionController::calculation($request);
 
         foreach($results as $result){
             Conection::create($result);
         }
+        $temp['conections'] = $temp['conections'] - 1;
 
+        if($temp['conections']==0){
+
+            $user = Auth::user();
+            $project = $user->project->last();
+            ConectionController::parents($project);
+        }
+        
         return response()->json($temp);
+
 
 
     }

@@ -1,9 +1,16 @@
 @extends('layouts.app1')
 
 @section('content')
-<div class="container-fluid" >
+    <h2 id="working" style="display: none;  position: absolute; opacity: 0.95; top: 40%; left: 35%">
+        <img src="/images/ajax-loader.gif">
+        Waiting for server...
+    </h2>
+<div class="container-fluid col-md-10 col-md-offset-1" id="container-form">
 
-    <h1>Форма расчёта для присоединения<span id = "title"> </span></h1>
+    <h1 class ="col-md-9 col-md-offset-3">Форма расчёта для присоединения
+        <span id = "title"> </span>
+    </h1>
+
 
     {!! Form::open(['id'=>'project-form']) !!}
 
@@ -34,6 +41,8 @@
         {!! Form::text('capacity', null, ['class' =>'form-control']) !!}
     </div>
 
+
+
     @if(isset($section_array))
         <input type="hidden" name= "section_cnt" value="{{$i=1}}">
         <input type="hidden" name= "conections" value="">
@@ -44,14 +53,14 @@
         </div>
     @endif
 
-    <a class="btn btn-warning" id = 'submit-form-button' role="button">Расчёт проекта</a>
+    <a class="btn btn-success" id = 'submit-form-button' role="button">Расчёт проекта</a>
 
 
     {!! Form::close() !!}
+    <div  id ="errors" style="position: relative;">
+        <ul></ul>
+    </div>
+</div>
 
-</div>
-<div  id ="errors">
-    <ul></ul>
-</div>
 
 @endsection

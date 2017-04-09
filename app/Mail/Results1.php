@@ -17,9 +17,11 @@ class Results1 extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public $conections;
+
+    public function __construct($conections)
     {
-        //
+        $this->conections = $conections;
     }
 
     /**
@@ -29,11 +31,7 @@ class Results1 extends Mailable
      */
     public function build()
     {
-        $conections = new ConectionController;
-
-        $conections = $conections->index();
-
-        $conections = $conections->conections;
+        $conections = $this->conections;
 
         return $this->markdown('email.test', compact('conections'));
     }

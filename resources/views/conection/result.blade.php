@@ -2,12 +2,12 @@
 @section('content')
 
 
-    <div class="container-fluid">
-        <h1>Результаты</h1>
+    <div class="container-fluid col-md-12 col-md-offset-0">
+        <h1 class="container-fluid col-md-6 col-md-offset-5">Результаты</h1>
 
         {!! Form::open(['method'=>'POST','action'=>'ConectionController@store']) !!}
 
-        <table class="table table-condensed">
+        <table class="table table-condensed" id="conection-result">
             <thead>
             <tr>
                 <th>Id</th>
@@ -45,8 +45,9 @@
                         <input type="hidden" name="creates[]" value="{{$create['outdoor_protection']}}">
                         <input type="hidden" name="creates[]" value="{{$create['project_id']}}">
                         <td>
-                            <a href={{route('conection.destroyone', ['delete_id'=>$create['id']])}}>Расчёт нового присоединения</a>
+                            <a class="btn btn-danger" id="button{{$create['id']}}" role="button">Удалить</a>
                         </td>
+
                     </tr>
                     @endforeach
 

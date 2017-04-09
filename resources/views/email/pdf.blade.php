@@ -41,7 +41,7 @@
         <table>
             <thead>
             <tr>
-                <th>Id</th>
+
                 <th>Проект</th>
                 <th>Название</th>
                 <th>Условное обозначение</th>
@@ -58,7 +58,7 @@
 
             @foreach($conections as $conection)
                 <tr>
-                    <td>{{$conection->id}}</td>
+
                     <td>{{$conection->project->name}}</td>
                     <td>{{$conection->name}}</td>
                     <td>{{$conection->title}}</td>

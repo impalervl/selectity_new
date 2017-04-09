@@ -43,12 +43,15 @@ Route::group(['middleware'=>'admin'],function(){
 
 Route::group(['middleware'=>'user'],function(){
     
-    Route::get('conection/mail','ConectionController@mail')->name('conection.mail');
+    Route::get('result/destroy','ResultController@destroyProject')->name('result.destroy');
+    Route::get('result/destroyAll','ResultController@destroyAll')->name('result.destroyAll');
+    Route::get('conection/parents','ConectionController@parents')->name('conection.parents');
     Route::get('conection/getpdf','ConectionController@pdf')->name('conection.getpdf');
+    Route::post('conection/mail','ConectionController@mail')->name('conection.mail');
     Route::resource('/conection','ConectionController');
     Route::post('conection/calculation','ConectionController@calculation')->name('conection.calculation');
-    Route::post('conection/destroyone','ConectionController@destroyone')->name('conection.destroyone');
     Route::resource('/project','ProjectController');
+    Route::resource('/result','ResultController');
     Route::post('project/children','ProjectController@children')->name('project.children');
     Route::post('project/calculate','ProjectController@calculate')->name('project.calculate');
     Route::post('project/start','ProjectController@start')->name('project.start');

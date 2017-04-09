@@ -14,13 +14,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Validator;
 
+
 class ConectionController extends Controller
 {
-
-
     /**
      * Display a listing of the resource.
      *
@@ -29,51 +30,36 @@ class ConectionController extends Controller
     public function index()
     {
 
-        $cnt = 0;
-
-        $user = Auth::user();
-
-        $projects = $user->project->all();
-
-        $project_names[-1] = 'выбрать';
-
-        foreach ($projects as $project) {
-            $project_names[$project->name] = $project->name;
-            $conections_temp[] = $project->conection->all();
-            $cnt++;
-        }
-
-        for ($i = 0; $i < $cnt; $i++) {
-            $row = count($conections_temp[$i]);
-            for ($j = 0; $j < $row; $j++) {
-                $conections[] = $conections_temp[$i][$j];
-            }
-        }
-
-        return view('results.index', compact('conections', 'project_names'));
+        
     }
     
-    static public function pdf()
+    public function pdf()
     {
-        $conections = new ConectionController;
+        $request = Input::all();
 
-        $conections = $conections->index();
-
-        $conections = $conections->conections;
+        $inputs = explode(',',$request['ids']);
+        
+        $conections = Conection::find($inputs);
 
         $pdf = PDF::loadView('email.pdf', compact('conections'))->setPaper('a4', 'landscape');
 
         return $pdf->download('results.pdf');
     }
 
-    static public function mail()
+    static public function mail(Request $request)
     {
+        $ids = $request->all();
+        
+        $conections = Conection::find($ids);
+        
         $user = Auth::user();
         $email = $user->email;
 
-        Mail::to($email)->send(new Results1);
+        Mail::to($email)->send(new Results1($conections));
+            $result = 'Письмо успешно отправлено';
 
-        return redirect('/conection');
+
+        return response()->json($result);
     }
     
     
@@ -121,7 +107,7 @@ class ConectionController extends Controller
             ]);
         }
 
-        return redirect('/conection');
+        return redirect('/result');
     }
 
     /**
@@ -169,26 +155,12 @@ class ConectionController extends Controller
 
         Conection::findOrFail($id)->delete();
 
-        return redirect('/conection');
+        return redirect('/result');
 
     }
+    
 
-    public function destroyone($id)
-    {
-
-        dd($id);
-
-    }
-
-    public function destroyAll(Request $request)
-    {
-
-
-        dd($request->all());
-
-    }
-
-    static public function power_calculation($current, $project_id)
+    static public function power_calculation($current, $project_id, $title)
     {
         $current = $current*1.1;
 
@@ -208,8 +180,6 @@ class ConectionController extends Controller
                 ->where([['nominal_current', '=', $nominal], ['break_current', '>', ($current * 800) / 1000]])
                 ->get();
         }
-
-        $title = 'QF' . Project::get()->count();
 
         foreach ($inputs as $input) {
 
@@ -317,7 +287,7 @@ class ConectionController extends Controller
         }
 
         if ($poles == 3){
-            $creates_power = ConectionController::power_calculation($current, $project->id);
+            $creates_power = ConectionController::power_calculation($current, $project->id,$title);
         }
 
         if(isset($creates_power)){
@@ -326,81 +296,98 @@ class ConectionController extends Controller
             }
         }
 
+
         if (isset($check['section_cnt'])) {
             return $creates;
         } else {
             return  view('conection.result', compact('creates'));
             
         }
-
-
     }
 
     static public function parents(Model $project)
     {
-
+        //$user = Auth::user();
+        //$project = $user->project->last();
         $conections = $project->conection->all();
 
         foreach ($conections as $conection) {
-
-            $title_section = explode('.', $conection->title);
-
-            if ($title_section[0] == 'QF1') {
-                if (!isset($currents1[$title_section[1] - 1])) {
-                    $currents1[] = $conection->nominal_current;
-                }
-                $poless1[] = $conection->poles;
+            if((strlen($conection->title))>5){
+                $title_section[] = substr($conection->title, -4);
             }
-
-            if ($title_section[0] == 'QF2') {
-                if (!isset($currents2[$title_section[1] - 1])) {
-                    $currents2[] = $conection->nominal_current;
-                }
-                $poless2[] = $conection->poles;
-            }
-
-            if ($title_section[0] == 'QF3') {
-                if (!isset($currents3[$title_section[1] - 1])) {
-                    $currents3[] = $conection->nominal_current;
-                }
-                $poless3[] = $conection->poles;
+            else{
+                $title_section[] = substr($conection->title, -3);
             }
         }
 
-        $current1 = 0;
-        $current2 = 0;
-        $current3 = 0;
-
-        foreach ($currents1 as $current) {
-            $current1 = $current1 + $current;
-        }
-        $title = 'QF1';
-        $poles1 = max($poless1);
-        ConectionController::parents_calculate($current1, $poles1, $title, $project->id);
-
-        if (isset($currents2)) {
-            foreach ($currents2 as $current) {
-                $current2 = $current2 + $current;
+        for($i=count($title_section)-1; $i>0; $i--){
+            if($title_section[$i]==$title_section[$i-1]){
+                unset($title_section[$i]);
             }
-            $title = 'QF2';
-            $poles2 = max($poless2);
-            ConectionController::parents_calculate($current2, $poles2, $title, $project->id);
         }
 
-        if (isset($currents3)) {
-            foreach ($currents3 as $current) {
-                $current3 = $current3 + $current;
+
+        foreach($title_section as $conection){
+            if((strlen($conection))>3){
+                $titles[]= substr($conection, -2);
             }
-            $title = 'QF3';
-            $poles3 = max($poless3);
-            ConectionController::parents_calculate($current3, $poles3, $title, $project->id);
+            else{
+                $titles[]= substr($conection, -1);
+            }
+
         }
 
-        $master_current = $current1 + $current2 + $current3;
-        $title = 'QF0';
-        $poles = 3;
+        $iterations = 0;
         
-        ConectionController::parents_calculate($master_current, $poles, $title, $project->id);
+        foreach($titles as $title){
+            if($iterations!=0){
+                if($title==1)
+                $result_sections[$iterations]=$titles[$iterations-1];
+            }
+            if($iterations==(count($titles)-1)){
+
+                $result_sections[$iterations]=$title;
+            }
+            $iterations++;
+        }
+
+        $iterations = 1;
+
+        foreach($result_sections as $sections){
+            for($i=1;$i<($sections+1);$i++){
+                foreach($conections as $conection){
+                    if($conection->title == "QF$iterations.$i"){
+                        if (!isset($currents[$iterations][$i])){
+                            $currents[$iterations][$i]=$conection->nominal_current;
+                        }
+                        $poless[$iterations][] = $conection->poles;
+                    }
+
+                }
+            }
+            $poless[$iterations]= max($poless[$iterations]);
+            $iterations++;
+        }
+
+        $result_current = Array();
+        $poles = Array();
+        for($i=1; $i<(count($currents)+1); $i++){
+            $result_current[$i] =0;
+            $titles[$i]="QF$i";
+            $poles[$i]=$poless[$i];
+            foreach($currents[$i] as $current){
+                $result_current[$i] = $result_current[$i] + $current;
+            }
+            ConectionController::parents_calculate($result_current[$i], $poles[$i], $titles[$i], $project->id);
+        }
+
+        $master_current = 0;
+        foreach($result_current as $current){
+             $master_current = $master_current + $current;
+        }
+        $master_poles = max($poles);
+        $title = 'QF0';
+        ConectionController::parents_calculate($master_current, $master_poles, $title, $project->id);
 
     }
 

@@ -12,6 +12,9 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('css/sidebar-menu.css')}}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Scripts -->
     <script>
@@ -36,7 +39,7 @@
                     @if (Auth::user())
                     <li {{(Request::is('conection/create') ? 'class=active' : '') }}><a  href={{route('conection.create')}}>Расчёт присоединения</a></li>
                     <li {{(Request::is('project') ? 'class=active' : '') }}><a href={{route('project.index')}}>Расчёт проекта</a></li>
-                    <li {{(Request::is('conection') ? 'class=active' : '') }}><a href={{route('conection.index')}}>Результаты</a></li>
+                    <li {{(Request::is('conection') ? 'class=active' : '') }}><a href={{route('result.index')}}>Результаты</a></li>
                     @endif
 
                 </ul>
@@ -83,6 +86,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/scripts.js') }}"></script>
+    <script src="{{ asset('js/sidebar-menu.js')}}"></script>
 
 </body>
 </html>

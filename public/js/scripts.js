@@ -243,7 +243,7 @@ function pdfRequest() {
 
     ids = ids.join();
     
-    location="http://selectity/conection/getpdf?ids="+ids;
+    location="/conection/getpdf?ids="+ids;
 
     /*$.ajax({
         type: "GET",
@@ -408,7 +408,7 @@ function setTitle(data){
         }
     }
     else{
-        location="http://selectity/result";
+        location="/result";
     }
 
 }

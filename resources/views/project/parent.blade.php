@@ -1,7 +1,7 @@
 @extends('layouts.app1')
 
 @section('content')
-    <div class="container-fluid col-md-10 col-md-offset-1">
+    <div class="container col-md-10 col-md-offset-1">
         <h1 class ="col-md-8 col-md-offset-4">Форма расчёта проекта</h1>
         <div class="form-group">
             {!! Form::open(['method'=>'POST','action'=>'ProjectController@children']) !!}

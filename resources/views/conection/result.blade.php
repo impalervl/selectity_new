@@ -2,8 +2,8 @@
 @section('content')
 
 
-    <div class="container-fluid col-md-12 col-md-offset-0">
-        <h1 class="container-fluid col-md-6 col-md-offset-5">Результаты</h1>
+    <div class="container col-md-12 col-md-offset-0">
+        <h1 class="col-md-6 col-md-offset-5">Результаты</h1>
 
         {!! Form::open(['method'=>'POST','action'=>'ConectionController@store']) !!}
 

@@ -1,11 +1,11 @@
 @extends('layouts.app1')
 
 @section('content')
-    <h2 id="working" style="display: none;  position: absolute; opacity: 0.95; top: 40%; left: 35%">
+    <h2 id="working" style="display: none;  position: absolute; opacity: 0.95; top: 260px; left: 35%; z-index:99">
         <img src="/images/ajax-loader.gif">
         Waiting for server...
     </h2>
-<div class="container-fluid col-md-10 col-md-offset-1" id="container-form">
+<div class="container col-md-10 col-md-offset-1" id="container-form">
 
     <h1 class ="col-md-9 col-md-offset-3">Форма расчёта для присоединения
         <span id = "title"> </span>

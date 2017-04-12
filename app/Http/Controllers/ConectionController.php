@@ -153,9 +153,6 @@ class ConectionController extends Controller
     public function destroy($id)
     {
 
-        Conection::findOrFail($id)->delete();
-
-        return redirect('/result');
 
     }
     
@@ -338,18 +335,30 @@ class ConectionController extends Controller
         }
 
         $iterations = 0;
-        
+
         foreach($titles as $title){
+            $init = 0;
             if($iterations!=0){
-                if($title==1)
-                $result_sections[$iterations]=$titles[$iterations-1];
-            }
-            if($iterations==(count($titles)-1)){
+                if($title==1){
+                    if($iterations==(count($titles)-1)){
+
+                        $result_sections[$iterations]=$titles[$iterations];
+                        $result_sections[$iterations+1]=$title;
+                        $init =1;
+                    }
+
+                        $result_sections[$iterations]=$titles[$iterations-1];
+                    }
+                }
+
+            if(($iterations==(count($titles)-1))&&($init != 1)){
 
                 $result_sections[$iterations]=$title;
             }
+
             $iterations++;
         }
+
 
         $iterations = 1;
 
@@ -365,10 +374,11 @@ class ConectionController extends Controller
 
                 }
             }
+
             $poless[$iterations]= max($poless[$iterations]);
             $iterations++;
         }
-
+        //dd($currents);
         $result_current = Array();
         $poles = Array();
         for($i=1; $i<(count($currents)+1); $i++){

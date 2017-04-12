@@ -1,6 +1,6 @@
 @extends('layouts.app1')
 @section('content')
-<div class="container-fluid">
+<div class="container">
     <h1>Результаты</h1>
     @if(isset($conections))
         <a class="btn btn-warning" href={{route('conection.getpdf')}} role="button">Загрузить в Pdf</a>

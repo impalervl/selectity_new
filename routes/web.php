@@ -43,6 +43,7 @@ Route::group(['middleware'=>'admin'],function(){
 
 Route::group(['middleware'=>'user'],function(){
     
+    Route::get('result/destroyOne','ResultController@destroyOne')->name('result.destroyOne');
     Route::get('result/destroy','ResultController@destroyProject')->name('result.destroy');
     Route::get('result/destroyAll','ResultController@destroyAll')->name('result.destroyAll');
     Route::get('conection/parents','ConectionController@parents')->name('conection.parents');

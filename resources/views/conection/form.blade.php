@@ -2,10 +2,10 @@
 
 @section('content')
 
-    <div class="container-fluid col-md-10 col-md-offset-1">
+    <div class="container col-md-10 col-md-offset-1">
         <h1 class ="col-md-8 col-md-offset-3">Форма расчёта для присоединения</h1>
 
-        <div class="container-fluid">
+        <div class="container">
             {!! Form::open(['method'=>'POST','action'=>'ConectionController@calculation']) !!}
 
             <input type="hidden" name="_token" value="{{ csrf_token() }}">

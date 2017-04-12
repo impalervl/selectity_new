@@ -3,7 +3,7 @@
 @section('content')
 
 
-<div class="container-fluid col-md-10 col-md-offset-1">
+<div class="container col-md-10 col-md-offset-1">
 
     <h1 class ="col-md-8 col-md-offset-3">Количество присоединений на шиносборках</h1>
 

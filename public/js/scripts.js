@@ -8,6 +8,11 @@ $(document).ready(function() {
     $('#pdfDownload').click(pdfRequest);
     $('#destroy-all').click(destroyAll);
     $('#sendMail').click(sendMail);
+    $('#results_list tr').each(function () {
+
+        var id = $(this).find('td:eq(0)').text();
+        $('#button'+id).click(deleteOne(id));
+    });
     
     $('#project_name').change(function () {
         var name = $(this).val();
@@ -18,11 +23,13 @@ $(document).ready(function() {
             $('#results-menu').addClass('hidden');
             $('#results_list tr').show();
             $('#left-column #delete-project').remove();
+
             return false;
         }
         else {
             var cnt = 0;
             $('#results_list tr').each(function (index) {
+
                 if (name == $(this).find("td:eq(1)").text()) {
                     if(($(this).find('td:eq(3)').text().length)>4)
                     titles_children[cnt] = $(this).find('td:eq(3)').text().substring(2,5);
@@ -41,26 +48,7 @@ $(document).ready(function() {
             $('#left-column  #delete-project').click(function(){
                 var data = {};
                 data[1] = $('#project_name').val();
-                console.log(data[1]);
-                $.ajax({
-                    type: "GET",
-                    url: "result/destroy",
-                    cache: false,
-                    data: data,
-                    beforeSend: function(request) {
-                        return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
-                    },
-                    success: function(){
-                        $("#project_name option[value=" + data[1] + "]").hide();
-                        $('#project_name').val(-1).change();
-                        $('#results_list tr').each(function (){
-                            if ((data[1] == $(this).find("td:eq(1)").text())){
-                                $(this).hide();
-                            }
-                        });
-                    }
-                });
-
+                deleteProject(data);
             });
 
             $('#results-menu').empty();
@@ -179,14 +167,86 @@ $(document).ready(function() {
 });
 
 function destroyAll(){
-    $.ajax({
-        type: "GET",
-        url: "result/destroyAll",
-        cache: false,
-        success: showAlert
+    
+    $("#dialog-confirm p").show();
+    $("#dialog-confirm").dialog({
+        resizable:false,
+        modal:true,
+        buttons:{
+            "Удалить": function(){
+                $.ajax({
+                    type: "GET",
+                    url: "result/destroyAll",
+                    cache: false,
+                    success: function(){
+                        location="/result";
+                    }
+                });
+                $(this).dialog( "close" );
+            },
+            Cancel: function(){
+                $(this).dialog( "close" );
+            }
+        }
+    });
+}
+
+function deleteProject(data){
+
+    $("#confirm-delete-project p").show();
+    $("#confirm-delete-project").dialog({
+        resizable:false,
+        modal:true,
+        buttons:{
+            "Удалить": function(){
+                $.ajax({
+                    type: "GET",
+                    url: "result/destroy",
+                    cache: false,
+                    data: data,
+                    beforeSend: function(request) {
+                        return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+                    },
+                    success: function(){
+                        $("#project_name option[value=" + data[1] + "]").hide();
+                        $('#project_name').val(-1).change();
+                        $('#results_list tr').each(function (){
+                            if ((data[1] == $(this).find("td:eq(1)").text())){
+                                $(this).hide();
+                            }
+                        });
+                    }
+                });
+                $(this).dialog( "close" );
+            },
+            Cancel: function(){
+                $(this).dialog( "close" );
+            }
+        }
+    });
+
+}
+
+function deleteOne(id){
+
+    var data = {};
+    data[1] = id;
+    $('#button'+id).click(function(){
+        $.ajax({
+            type: "GET",
+            url: "result/destroyOne",
+            cache: false,
+            data: data,
+            beforeSend: function(request) {
+                return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
+            },
+            success: function(data){
+                showAlert(data);
+                $('#button'+id).parent().parent().remove();
+            }
+        });
 
     });
-    
 }
 function setSections(titles_children) {
     var i = titles_children.length;

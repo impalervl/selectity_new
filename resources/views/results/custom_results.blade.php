@@ -16,6 +16,12 @@
                 <div class='container alert alert-success col-md-3 col col-md-offset-0' id="mail-info" style="display: none" >
                     <h5></h5>
                 </div>
+                <div id="dialog-confirm" title="Удалить все результаты">
+                    <p style="display: none"><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Результаты не смогут быть восстановлены, вы уверены?</p>
+                </div>
+                <div id="confirm-delete-project" title="Удалить проект">
+                    <p style="display: none"><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>Результаты не смогут быть восстановлены, вы уверены?</p>
+                </div>
                 <div class="col-md-0 col col-md-offset-6">
                     <a class="btn btn-success"  id="pdfDownload" role="button">Загрузить в Pdf</a>
                     <a class="btn btn-success " id="sendMail" role="button">Отпаравить на почту</a>
@@ -50,15 +56,14 @@
                         <td>{{$conection->nominal_current}}</td>
                         <td>{{$conection->poles}}</td>
                         <td>{{$conection->break_current}}</td>
-                        <td>{{$conection->outdoor_protection}}</td>
+                        @if($conection->outdoor_protection == 'NULL')
+                            <td>Не указано</td>
+                        @else
+                            <td>{{$conection->outdoor_protection}}</td>
+                        @endif
                         <td>{{$conection->created_at}}</td>
                         <td>
-                            {!! Form::open(['method'=>'DELETE','action'=>['ConectionController@destroy',$conection->id]]) !!}
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <div class="form-group">
-                                {!! Form::submit('Удалить результат',['class'=>'btn btn-danger']) !!}
-                            </div>
-                            {!! Form::close() !!}
+                            <a class="btn btn-danger" id="button{{$conection->id}}" role="button">Удалить</a>
                         </td>
                     </tr>
                 @endforeach

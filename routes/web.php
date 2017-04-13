@@ -21,18 +21,6 @@ Auth::routes();
 Route::get('/', 'HomeController@index');
 
 
-
-/*Route::get('project/email', function(){
-
-    $creates['gf']=' $user = Auth::user();';
-
-    Mail::send('email.test', $creates, function ($message){
-
-        $message->to('impalervl@gmail.com', 'vlad')->subject('ghghghgh');
-    });
-
-})->name('project.email');*/
-
 Route::group(['middleware'=>'admin'],function(){
 
     Route::resource('/admin/projects','AdminProjectsController');

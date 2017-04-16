@@ -37,6 +37,11 @@
                                 @endif
                             </div>
                         </div>
+                        <div>
+                            @if(Session::has('message'))
+                                <div class="alert alert-warning" style="text-align: center">{!!Session::get('message')!!}</div>
+                            @endif
+                        </div>
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">

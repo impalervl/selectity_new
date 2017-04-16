@@ -42,14 +42,11 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
                 <ul class="nav navbar-nav">
-                    @if (Auth::user())
-                        <li {{(Request::is('/') ? 'class=active' : '') }}><a  href={{route('main')}}>Главная</a></li>
-                        <li {{(Request::is('conection/create') ? 'class=active' : '') }}><a  href={{route('conection.create')}}>Расчёт присоединения</a></li>
-                        <li {{(Request::is('project') ? 'class=active' : '') }}><a href={{route('project.index')}}>Расчёт проекта</a></li>
-                        <li {{(Request::is('result') ? 'class=active' : '') }}><a href={{route('result.index')}}>Результаты</a></li>
-                        <li {{(Request::is('info') ? 'class=active' : '') }}><a  href={{route('info')}}>Доп.информация</a></li>
-                    @endif
-
+                    <li {{(Request::is('/') ? 'class=active' : '') }}><a  href={{route('main')}}>Главная</a></li>
+                    <li {{(Request::is('conection/create') ? 'class=active' : '') }}><a  href={{route('conection.create')}}>Расчёт присоединения</a></li>
+                    <li {{(Request::is('project') ? 'class=active' : '') }}><a href={{route('project.index')}}>Расчёт проекта</a></li>
+                    <li {{(Request::is('result') ? 'class=active' : '') }}><a href={{route('result.index')}}>Результаты</a></li>
+                    <li {{(Request::is('info') ? 'class=active' : '') }}><a  href={{route('info')}}>Доп.информация</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @if (Auth::user())

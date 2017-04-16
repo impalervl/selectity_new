@@ -21,7 +21,7 @@ class User
             return $next($request);
         }
 
-        return redirect('/');
+        return redirect('/login')->with('message','Для дальнейшего использования сайта пожалуйста войдите или зарегестрируйтесь');
         
     }
 }

@@ -20,7 +20,7 @@
                                 null, ['class' =>'form-control', 'id'=>"section$i"]) !!}
         </div>
         @endfor
-            {!! Form::submit('Подтвердить', ['class' =>'btn btn-success', 'id' => 'children-submit-button']) !!}
+            {!! Form::submit('Подтвердить', ['class' =>'btn btn-success']) !!}
 
     {!! Form::close() !!}
     @endif

@@ -70,10 +70,10 @@
                 </tbody>
             </table>
             @else
-                <h3 class="col-md-9 col-md-offset-2">Пока ничего не посчитано</h3>
+                <h3 class="col-md-9 col-md-offset-3">Пока ничего не посчитано</h3>
                 <div class="container-fluid col-md-9 col-md-offset-1">
-                    <a class="btn btn-primary" href={{route('conection.create')}} role="button">Расчитать первое присоединение </a>
-                    <a class="btn btn-warning" href={{route('project.create')}} role="button">Расчитать первый проект</a>
+                    <a style="width: 300px" class="btn btn-primary" href={{route('conection.create')}} role="button">Расчитать первое присоединение </a>
+                    <a style="width: 300px" class="btn btn-warning" href={{route('project.create')}} role="button">Расчитать первый проект</a>
                 </div>
             @endif
         </div>

@@ -208,13 +208,23 @@ function deleteProject(data){
                         return request.setRequestHeader('X-CSRF-Token', $("meta[name='csrf-token']").attr('content'));
                     },
                     success: function(){
-                        $("#project_name option[value=" + data[1] + "]").hide();
-                        $('#project_name').val(-1).change();
-                        $('#results_list tr').each(function (){
-                            if ((data[1] == $(this).find("td:eq(1)").text())){
-                                $(this).hide();
-                            }
+                        var cnt_options = 0;
+                        $('#project_name option').each(function(){
+                            cnt_options++;
                         });
+                        if(cnt_options > 2){
+                            $("#project_name option[value=" + data[1] + "]").remove();
+                            $('#project_name').val(-1).change();
+                            $('#results_list tr').each(function (){
+                                if ((data[1] == $(this).find("td:eq(1)").text())){
+                                    $(this).hide();
+                                }
+                            });
+                        }
+                        else{
+                            location = '/result';
+                        }
+
                     }
                 });
                 $(this).dialog( "close" );

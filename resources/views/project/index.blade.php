@@ -1,10 +1,15 @@
 @extends('layouts.app1')
 @section('content')
 
-    <div class="container">
-            <div class="col-md-5 col-md-offset-0">
+    <div class="container" >
+        <div class="col-md-6" style="text-align: center">
+            <img style=" height: 320px; width: 600px" src="/images/selectity.png" alt="">
+            <span style="position: relative; top:20px;">Риунок - Однолинейная схема примера расчета</span>
+            <a style="position: relative; width: 400px; top:100px" class="btn btn-primary" href={{route('project.create')}} role="button">Расчитать проект</a>
+        </div>
+        <div class="col-md-5 col-md-offset-1">
 
-                    <div class="text-left">
+                    <div class="text-right" style="text-align: justify">
                         <dl>
                             <dt><h2>Расчет проекта</h2></dt>
 
@@ -45,16 +50,6 @@
                     </div>
 
             </div>
-
-        <figure>
-            <img style=" height: 320px; width: 600px" src="/images/selectity.png" alt="">
-            <figcaption><br>Рис 1 - Однолинейная схема примера расчёта</figcaption>
-        </figure>
-
-        <a class="btn btn-primary col-md-offset-5"
-           style="position: relative; top:180px"
-           href={{route('project.create')}} role="button">Расчитать проект
-        </a>
 
     </div>
 

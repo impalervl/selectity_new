@@ -13,7 +13,7 @@
             </div>
 
             <div class="form-group">
-                {!! Form::label('parents','Количество шиносборок') !!}
+                {!! Form::label('parents','Количество шиносборок/секций') !!}
                 {!! Form::select('parents',array(''=>'Количество шиносборок','1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5','6'=>'6','7'=>'7'), null, ['class' =>'form-control']) !!}
             </div>
 

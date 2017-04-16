@@ -68,6 +68,19 @@ class ProjectController extends Controller
 
     public function start(Request $request)
     {
+       // dd($request->all());
+        $sections = $request->all();
+        $parents = count($sections)-1;
+        for($i=1; $i<count($sections); $i++){
+            $validate["section$i"] = 'required';
+        }
+
+        $validator = Validator::make($request->all(),$validate);
+
+        if ($validator->fails()) {
+            return view('project.children',compact('parents'))->withErrors($validator);
+        }
+
         $temp = $request->input();
         $this->formData = $temp;
         $temp['sections'] = 0;

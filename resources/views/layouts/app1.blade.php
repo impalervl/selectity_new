@@ -14,6 +14,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('css/sidebar-menu.css')}}">
     <link href="{{ asset('css/jquery-ui.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/slick-theme.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/slick.css') }}" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -33,14 +35,19 @@
                 <button type="button" class="collapsed navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-9" aria-expanded="false">
                     <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
                     <span class="icon-bar"></span> <span class="icon-bar"></span>
-                </button> <a href="{{ url('/') }}" class="navbar-brand">СЕЛЕКТИВНОСТЬ</a>
+                </button>
+                <a href="{{ url('/') }}" class="navbar-brand">
+                    <img alt="Brand" src="/images/logo.png" >
+                </a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
                 <ul class="nav navbar-nav">
                     @if (Auth::user())
-                    <li {{(Request::is('conection/create') ? 'class=active' : '') }}><a  href={{route('conection.create')}}>Расчёт присоединения</a></li>
-                    <li {{(Request::is('project') ? 'class=active' : '') }}><a href={{route('project.index')}}>Расчёт проекта</a></li>
-                    <li {{(Request::is('conection') ? 'class=active' : '') }}><a href={{route('result.index')}}>Результаты</a></li>
+                        <li {{(Request::is('/') ? 'class=active' : '') }}><a  href={{route('main')}}>Главная</a></li>
+                        <li {{(Request::is('conection/create') ? 'class=active' : '') }}><a  href={{route('conection.create')}}>Расчёт присоединения</a></li>
+                        <li {{(Request::is('project') ? 'class=active' : '') }}><a href={{route('project.index')}}>Расчёт проекта</a></li>
+                        <li {{(Request::is('result') ? 'class=active' : '') }}><a href={{route('result.index')}}>Результаты</a></li>
+                        <li {{(Request::is('info') ? 'class=active' : '') }}><a  href={{route('info')}}>Доп.информация</a></li>
                     @endif
 
                 </ul>
@@ -85,10 +92,13 @@
 </div>
 
     <!-- Scripts -->
+    <script src="{{ asset('js/jquery.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('js/slick.min.js') }}"></script>
     <script src="{{ asset('js/scripts.js') }}"></script>
     <script src="{{ asset('js/sidebar-menu.js')}}"></script>
+    <script src="{{ asset('js/slides.js')}}"></script>
 
 </body>
 </html>

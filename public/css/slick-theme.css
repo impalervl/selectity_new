@@ -207,8 +207,8 @@
 }
 
 .scrollToTop{
-    width:100px;
-    height:130px;
+    width:50px;
+    height:50px;
     padding:10px;
     text-align:center;
     background: whiteSmoke;
@@ -216,10 +216,10 @@
     color: #444;
     text-decoration: none;
     position:fixed;
-    top:600px;
-    right:20px;
+    bottom: 20px;
+    right:15px;
     display:none;
-    background: url('arrow_up.png') no-repeat 0px 20px;
+
 }
 .scrollToTop:hover{
     text-decoration:none;
